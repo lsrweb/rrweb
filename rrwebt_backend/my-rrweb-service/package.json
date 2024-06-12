@@ -1,0 +1,20 @@
+{
+  "name": "my-rrweb-service",
+  "version": "1.0.0",
+  "description": "Node.js service for storing and retrieving rrweb data",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
