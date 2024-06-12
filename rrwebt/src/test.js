@@ -24,8 +24,8 @@ export const startRecording = () => {
           key: 'kagfdsgkfagsfh',
           event,
         },
-      }).then((res) => {
-        events.push(res.data.event);
+      }).then(() => {
+        
       });
     },
   });
@@ -39,7 +39,7 @@ axios({
   },
 
 }).then((res) => {
-  events = res.data.events;
+  events = res.data;
 });
 
 export const stopRecording = () => {
