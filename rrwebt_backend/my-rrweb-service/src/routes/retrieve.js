@@ -10,7 +10,9 @@ router.post('/', (req, res) => {
   try {
     // 调用 retrieveData 方法从数据库或文件系统中检索数据
     const data = retrieveController.retrieveData(req.body);
+    // 由于后端返回的数据量可能过大，所以采用流式传输
     res.status(200).json(data);
+
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve data' });
   }
