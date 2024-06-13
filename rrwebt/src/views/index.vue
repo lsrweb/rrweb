@@ -200,21 +200,20 @@ export default {
       for (let i = 0; i < this.eventsMatrix.length; i++) {
         for (let j = 0; j < this.eventsMatrix[i].length; j++) {
           if (this.eventsMatrix[i][j].type == 2) {
-            if (chunkEvent.length > 0) {
-              await axios({
-                method: "post",
-                url:
-                  process.env.NODE_ENV == "development"
-                    ? "http://127.0.0.1:5000/store"
-                    : "http://rrweb.backend.srliforever.ltd/store",
-                data: {
-                  //将二维数组转为一维数组
-                  event: chunkEvent.reduce((acc, val) => acc.concat(val), []),
-                  key: this.requestKey,
-                },
-              });
-              chunkEvent = [];
-            }
+            await axios({
+              method: "post",
+              url:
+                process.env.NODE_ENV == "development"
+                  ? "http://127.0.0.1:5000/store"
+                  : "http://rrweb.backend.srliforever.ltd/store",
+              data: {
+                //将二维数组转为一维数组
+                event: chunkEvent.reduce((acc, val) => acc.concat(val), []),
+                key: this.requestKey,
+              },
+            });
+            chunkEvent = [];
+          } else {
             await axios({
               method: "post",
               url:
@@ -227,13 +226,10 @@ export default {
                 key: this.requestKey,
               },
             });
-          } else {
-            chunkEvent.push(this.eventsMatrix[i][j]);
           }
         }
       }
 
-    
       this.$message.success("录制完成！");
 
       console.log(
@@ -275,23 +271,23 @@ export default {
         },
       });
 
-    // 将二维数据转为一维
-        let events = res.data.reduce((acc, val) => acc.concat(val), []);
-        console.log(events);
-        this.showReplay = true;
-        new rrwebPlayer({
-            target: this.$refs.replayer, // 可以自定义 DOM 元素
-            // 配置项
-            props: {
-            logConfig: true,
-            events: events,
-            plugins: [
-                rrweb.getReplayConsolePlugin({
-                level: ["info", "log", "warn", "error"],
-                }),
-            ],
-            },
-        });
+      // 将二维数据转为一维
+      let events = res.data.reduce((acc, val) => acc.concat(val), []);
+      console.log(events);
+      this.showReplay = true;
+      new rrwebPlayer({
+        target: this.$refs.replayer, // 可以自定义 DOM 元素
+        // 配置项
+        props: {
+          logConfig: true,
+          events: events,
+          plugins: [
+            rrweb.getReplayConsolePlugin({
+              level: ["info", "log", "warn", "error"],
+            }),
+          ],
+        },
+      });
     },
   },
 };
