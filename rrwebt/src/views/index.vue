@@ -212,20 +212,24 @@ export default {
                 key: this.requestKey,
               },
             });
-            chunkEvent = [];
           } else {
-            await axios({
-              method: "post",
-              url:
-                process.env.NODE_ENV == "development"
-                  ? "http://127.0.0.1:5000/store"
-                  : "http://rrweb.backend.srliforever.ltd/store",
-              data: {
-                //将二维数组转为一维数组
-                event: this.eventsMatrix[i][j],
-                key: this.requestKey,
-              },
-            });
+            // 否则,每20个event为一组
+            chunkEvent.push(this.eventsMatrix[i][j]);
+            if (chunkEvent.length == 20) {
+              await axios({
+                method: "post",
+                url:
+                  process.env.NODE_ENV == "development"
+                    ? "http://127.0.0.1:5000/store"
+                    : "http://rrweb.backend.srliforever.ltd/store",
+                data: {
+                  //将二维数组转为一维数组
+                  event: chunkEvent.reduce((acc, val) => acc.concat(val), []),
+                  key: this.requestKey,
+                },
+              });
+              chunkEvent = [];
+            }
           }
         }
       }
