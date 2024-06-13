@@ -271,7 +271,7 @@ export default {
             ? "http://127.0.0.1:5000/retrieve"
             : "http://rrweb.backend.srliforever.ltd/retrieve",
         data: {
-          key: "aftuejka2pj",
+          key: this.requestKey,
         },
       });
 
