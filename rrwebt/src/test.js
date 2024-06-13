@@ -19,7 +19,7 @@ export const startRecording = () => {
     emit(event) {
       axios({
         method: "post",
-        url: "http://localhost:5000/store",
+        url: "http://rrweb.backend.srliforever.ltd/store",
         data: {
           key: 'kagfdsgkfagsfh',
           event,
@@ -33,7 +33,7 @@ export const startRecording = () => {
 
 axios({
   method: "post",
-  url: "http://localhost:5000/retrieve",
+  url: "http://rrweb.backend.srliforever.ltd/retrieve",
   data: {
     key: 'kagfdsgkfagsfh',
   },
