@@ -207,8 +207,7 @@ export default {
                   ? "http://127.0.0.1:5000/store"
                   : "http://rrweb.backend.srliforever.ltd/store",
               data: {
-                //将二维数组转为一维数组
-                event: chunkEvent.reduce((acc, val) => acc.concat(val), []),
+                event: [this.eventsMatrix[i][j]],
                 key: this.requestKey,
               },
             });
@@ -266,32 +265,29 @@ export default {
     async getAXIOSdata() {
       const res = await axios({
         method: "post",
-        url:
-          process.env.NODE_ENV == "development"
-            ? "http://127.0.0.1:5000/retrieve"
-            : "http://rrweb.backend.srliforever.ltd/retrieve",
+        url:"http://rrweb.backend.srliforever.ltd/retrieve",
         data: {
-          key: this.requestKey,
+          key: '778cku3wknp',
         },
       });
 
       // 将二维数据转为一维
       let events = res.data.reduce((acc, val) => acc.concat(val), []);
       console.log(events);
-      this.showReplay = true;
-      new rrwebPlayer({
-        target: this.$refs.replayer, // 可以自定义 DOM 元素
-        // 配置项
-        props: {
-          logConfig: true,
-          events: events,
-          plugins: [
-            rrweb.getReplayConsolePlugin({
-              level: ["info", "log", "warn", "error"],
-            }),
-          ],
-        },
-      });
+    //   this.showReplay = true;
+    //   new rrwebPlayer({
+    //     target: this.$refs.replayer, // 可以自定义 DOM 元素
+    //     // 配置项
+    //     props: {
+    //       logConfig: true,
+    //       events: events,
+    //       plugins: [
+    //         rrweb.getReplayConsolePlugin({
+    //           level: ["info", "log", "warn", "error"],
+    //         }),
+    //       ],
+    //     },
+    //   });
     },
   },
 };
