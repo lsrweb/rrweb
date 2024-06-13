@@ -229,6 +229,23 @@ export default {
               });
               chunkEvent = [];
             }
+            // 如果最后一组不足20个,则单独传输
+            if (
+              i == this.eventsMatrix.length - 1 &&
+              j == this.eventsMatrix[i].length - 1
+            ) {
+              await axios({
+                method: "post",
+                url:
+                  process.env.NODE_ENV == "development"
+                    ? "http://127.0.0.1:5000/store"
+                    : "http://rrweb.backend.srliforever.ltd/store",
+                data: {
+                  event: chunkEvent.reduce((acc, val) => acc.concat(val), []),
+                  key: this.requestKey,
+                },
+              });
+            }
           }
         }
       }
@@ -265,29 +282,28 @@ export default {
     async getAXIOSdata() {
       const res = await axios({
         method: "post",
-        url:"http://rrweb.backend.srliforever.ltd/retrieve",
+        url: "http://rrweb.backend.srliforever.ltd/retrieve",
         data: {
-          key: '778cku3wknp',
+          key:  process.env.NODE_ENV == "development" ? "dpfpek533u" : this.requestKey,
         },
       });
 
       // 将二维数据转为一维
       let events = res.data.reduce((acc, val) => acc.concat(val), []);
-      console.log(events);
-    //   this.showReplay = true;
-    //   new rrwebPlayer({
-    //     target: this.$refs.replayer, // 可以自定义 DOM 元素
-    //     // 配置项
-    //     props: {
-    //       logConfig: true,
-    //       events: events,
-    //       plugins: [
-    //         rrweb.getReplayConsolePlugin({
-    //           level: ["info", "log", "warn", "error"],
-    //         }),
-    //       ],
-    //     },
-    //   });
+      this.showReplay = true;
+      new rrwebPlayer({
+        target: this.$refs.replayer, // 可以自定义 DOM 元素
+        // 配置项
+        props: {
+          logConfig: true,
+          events: events,
+          plugins: [
+            rrweb.getReplayConsolePlugin({
+              level: ["info", "log", "warn", "error"],
+            }),
+          ],
+        },
+      });
     },
   },
 };
