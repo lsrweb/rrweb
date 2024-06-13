@@ -19,8 +19,8 @@ class StoreController {
           reject(err);
         } else {
           console.log("成功清空rrweb数据");
-        })
-      }
+        }
+      })
       // 向根目录public/stores/文件中写入数据
       // 判断是否有 key.txt 文件，如果有则追加，如果没有则创建
       // 每行存储一个事件
