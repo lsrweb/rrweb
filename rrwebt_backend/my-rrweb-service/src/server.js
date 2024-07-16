@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 
 app.get('/video', (req, res) => {
-  const videoPath = path.join(__dirname, '../public/video/希望.mp4');
+  const videoPath = path.join(__dirname, '../public', 'videos', '希望有羽毛和翅膀.mp4');
   const stat = fs.statSync(videoPath);
   const fileSize = stat.size;
   const range = req.headers.range;
